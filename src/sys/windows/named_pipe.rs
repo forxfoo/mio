@@ -214,7 +214,7 @@ impl Inner {
         let res = GetOverlappedResult(self.handle.raw(), overlapped, &mut bytes, 0);
         if res == 0 {
             let err = io::Error::last_os_error();
-            if err.raw_os_error() == Some(ERROR_IO_INCOMPLETE as i32) {
+            if err.raw_os_error() == Some(ERROR_IO_INCOMPLETE as i32) || || err.raw_os_error() == Some(ERROR_MORE_DATA as i32) {
                 Ok(None)
             } else {
                 Err(err)
